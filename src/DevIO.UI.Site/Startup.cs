@@ -1,3 +1,4 @@
+using DevIO.UI.Site.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -19,6 +20,8 @@ namespace DevIO.UI.Site
                 options.AreaViewLocationFormats.Add("/Views/Shared/{0}.cshtml");
             });
             services.AddMvc(options => options.EnableEndpointRouting = false).SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
+            // DI
+            services.AddTransient<IPedidoRepository, PedidoRepository>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
