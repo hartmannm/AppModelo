@@ -1,21 +1,32 @@
-﻿using DevIO.UI.Site.Data;
+﻿using DevIO.UI.Site.Servicos;
 using Microsoft.AspNetCore.Mvc;
+using System;
 
 namespace DevIO.UI.Site.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly IPedidoRepository _pedidoRepository;
+        public OperacaoService OperacaoService { get; }
+        public OperacaoService OperacaoService2 { get; }
 
-        public HomeController(IPedidoRepository pedidoRepository)
+        public HomeController(OperacaoService operacaoService, OperacaoService operacaoService2)
         {
-            _pedidoRepository = pedidoRepository;
+            OperacaoService = operacaoService;
+            OperacaoService2 = operacaoService2;
         }
 
-        public IActionResult Index()
+        public string Index()
         {
-            var pedido = _pedidoRepository.ObeterPedido();
-            return View();
+            return "Primeira instância: " + Environment.NewLine + OperacaoService.Transient.OperacaoId + Environment.NewLine +
+            OperacaoService.Scoped.OperacaoId + Environment.NewLine + OperacaoService.Singleton.OperacaoId +
+            Environment.NewLine + OperacaoService.SingletonInstance.OperacaoId + Environment.NewLine +
+
+            Environment.NewLine +
+            Environment.NewLine +
+
+            "Segunda instância: " + Environment.NewLine + OperacaoService2.Transient.OperacaoId + Environment.NewLine +
+            OperacaoService2.Scoped.OperacaoId + Environment.NewLine + OperacaoService2.Singleton.OperacaoId +
+            Environment.NewLine + OperacaoService2.SingletonInstance.OperacaoId + Environment.NewLine;
         }
     }
 }
